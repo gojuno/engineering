@@ -2,9 +2,9 @@
 
 ## Proposed Plan
 
-* Migrate independent semi-standalone services, i. e. `MetricsService` and such.
-* Migrate MVVM components where possible using interop to communicate with required services.
-* Migrate remaining services since consumers (MVVM components) will be ready for such changes at this point.
+* Migrate independent semi-standalone services.
+* Migrate UI components where possible using interop to communicate with required services.
+* Migrate remaining services since consumers (UI components) will be ready for such changes at this point.
 * Remove interop and RxJava 1-related dependencies.
 
 ## Tips and Tricks
@@ -14,16 +14,16 @@
 * At this point RxJava 1 and RxJava 2 can be used side-by-side without any consequences.
   All fundamental thingies, such as Retrofit adapter and custom operators are already in place,
   but you may need to write your own.
-* Refer to `help` package when in doubt. It was migrated first, including MVVM and services,
-  so you may find it useful as a starting searching point.
+* Refer to a package migrated first when in doubt.
+  You may find it useful as a starting searching point.
 * Do not forget to change (and run) unit tests, this can and will presume the correct behavior.
   If there is no test, prefer to write it first if possible and reasonable.
 * RxJava 2 crashes on `null` emissions. Make sure you are not consuming such streams.
   The final goal is to replace `Observable<T?>` with either `Observable<Optional<T>>`
   or `Optional<T>` everywhere, no exceptions.
-* Migration changes should be as isolated as possible. Change god-like services, i. e. `MarketService`, `RideManager`
+* Migration changes should be as isolated as possible. Change god-like services
   and friends, last. It is always better to migrate a single atomic thing and test it properly
   instead of changing basically everything.
-* Create a tech task for each migration with description what to recheck. Our testing team is really good,
+* Create a tech task for each migration with description what to recheck. Your testing team is really good,
   but help them out to catch possible issues.
 
