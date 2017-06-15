@@ -47,7 +47,7 @@ General Pipeline builds:
 
 This gives us **automatic rebuilds** for Pull Request if branch it is targeting was changed — shortest CI feedback loop possible for a given PR.
 
-![Two Build Statuses](images/build_merge_result_and_commit.png)
+<img src="images/build_merge_result_and_commit.png" alt="Two Build Statuses" style="height: 200px;"/>
 
 Building `pr/*/merge` refs is **essential if you want to have stable dev/master branch**. There are cases (happened 1-2 times a week even in our small team) when merge of a PR will break its target branch because there was logical conflict. 
 
@@ -425,13 +425,15 @@ Guys from [EL Passion][el passion] even made an [IntelliJ Plugin][mainframer int
 
 With Kotlin inremental compilation and recent update that made kapt incremental (in many but not all cases) we're able to build apk with source code & resources changes in under 10 seconds including sync time!
 
+So we encourage teams who suffer from slow builds to try [Mainframer][mainframer] and [share results][mainframer share results] with community!
+
 ---
 
 ## That's it, thank you for reading!
 
 Author: [Artem Zinnatullin][artem_zin]
 
-We use GitHub issues for discussions and comments: TODO link
+We use GitHub issues for discussions and comments: https://github.com/gojuno/engineering/issues/3
 
 [bitbucket server]: https://www.atlassian.com/software/bitbucket/server
 [docker]: https://www.docker.com/
@@ -463,4 +465,5 @@ We use GitHub issues for discussions and comments: TODO link
 [mainframer]: https://github.com/gojuno/mainframer
 [el passion]: https://github.com/elpassion
 [mainframer intellij plugin]: https://github.com/elpassion/mainframer-intellij-plugin
+[mainframer share results]: https://github.com/gojuno/mainframer/issues/17
 [artem_zin]: https://twitter.com/artem_zin
