@@ -435,6 +435,8 @@ Author: [Artem Zinnatullin][artem_zin]
 
 We use GitHub issues for discussions and comments: https://github.com/gojuno/engineering/issues/3
 
+You can follow this repo to receive updates about new articles from Juno Engineering Team and new comments in discussions.
+
 [bitbucket server]: https://www.atlassian.com/software/bitbucket/server
 [docker]: https://www.docker.com/
 [docker in docker 2015]: https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/
