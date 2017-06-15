@@ -40,7 +40,7 @@ Disclaimer:
 
 General Pipeline builds:
 
-* Each commit in the repo. 
+* Every branch in the repo. 
 * `pr/*/merge` refs provided by [Bitbucket Server][bitbucket server] (GitHub also have similar feature JFYI).
 
 `pr/*/merge` ref updates each time target branch or PR itself changes. 
