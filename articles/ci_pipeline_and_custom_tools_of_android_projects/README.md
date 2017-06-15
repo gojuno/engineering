@@ -47,6 +47,8 @@ General Pipeline builds:
 
 This gives us **automatic rebuilds** for Pull Request if branch it is targeting was changed — shortest CI feedback loop possible for a given PR.
 
+![Two Build Statuses](images/build_merge_result_and_commit.png)
+
 Building `pr/*/merge` refs is **essential if you want to have stable dev/master branch**. There are cases (happened 1-2 times a week even in our small team) when merge of a PR will break its target branch because there was logical conflict. 
 
 Real life example: you change some class name in PR1, PR2 used old class name, for Git there might be no conflict at all, however result of merge of both PRs will not even be compilable.
@@ -65,7 +67,7 @@ First of all let's define few major building blocks that allow us to have consis
 
 ### Docker
 
-We've wrapped all our CI jobs with [Docker][docker] in August 2016 and since then it did help us a lot. There are issues though, but it's worth it.
+We've wrapped all our CI jobs with [Docker][docker] in August 2016 and since then it helped us a lot. There are issues though, but it's worth it.
 
 #### Docker TL;TR
 
@@ -165,15 +167,15 @@ So now that we know about Docker and Build Scripts we can describe how we build 
      - Either it is already on machine
      - Or it can be pulled from the Docker registry 
      - Or it should be built and pushed to the registry
-1. Docker Container invokes `bash ci/internal/build.sh`
+1. `ci/build.sh` starts Docker Container with workspace mounted as a volume
     - If it's "Build" stage of Pipeline:
-        1. `ci/build.sh` starts Docker Container with build workspace mounted as a volume and `bash ci/internal/build.sh` as a target command
+        1. Docker Container runs `bash ci/internal/build.sh` as a target command
         1. `ci/internal/build.sh` constructs `./gradlew` invocation with required parameters depending on build feature flags
         1. Gradle builds the app, runs Unit tests (we have lots of them), runs Lint and produces apks
         1. CI stashes resulting `rider-android.apk` and `rider-androidTest.apk` apks so they could be used by "UI Tests" stage of Pipeline
     - If it's "UI Tests" stage of Pipeline:
         1. CI unstashes apks built by "Build" stage of Pipeline
-        1. `ci/build.sh` starts Docker Container with build workspace mounted as a volume, GPU and XServer access and `bash ci/internal/run_ui_tests.sh` as a target command
+        1. 1. Docker Container also mounts GPU device and XServer and runs `bash ci/internal/run_ui_tests.sh` as a target command
         1. `ci/internal/run_ui_tests.sh` invokes [Swarmer][swarmer] to start Android Emulators in parallel
         1. `ci/internal/run_ui_tests.sh` invokes [Composer][composer] that runs Instrumentation Tests in parallel
 1. `ci/internal/collect_artifacts.sh` collects artifacts from different folders to `artifacts` folder
@@ -186,7 +188,7 @@ So now that we know about Docker and Build Scripts we can describe how we build 
 
 It is written in Kotlin with RxJava and uses new `avdmanager` tool from SDK, contributions are welcome!
 
-Howe we use it:
+How we use it:
 
 - Config of an emulator is stored under version control, so we apply regular code review process to it.
 - Number of emulators to start is provided to `run_ui_tests.sh` as an Environment Variable through Jenkins Node configuration because different machines can run different amount of emulators at a time
